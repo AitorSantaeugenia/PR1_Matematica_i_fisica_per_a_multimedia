@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8">
+    	<title>Sistema solar three.js</title>
+
+    	<style type="text/css">
+    		body {
+    			margin: 0;
+    			padding: 0;
+    		}
+			
+			 @import url(http://fonts.googleapis.com/css?family=Nunito:700|Carme);
+			* {
+			  margin: 0;
+			  padding: 0;
+			  box-sizing: border-box;
+			}
+			.contenedor-tabs {
+				width: 100%;
+				max-width: 100%;
+				margin: 5vh auto 0;
+				position: absolute;
+				opacity: 50;
+				
+			}
+
+			span.diana {
+				/*no jump */
+				display: none;
+				
+				}
+
+			.tab div {
+			  background: #8AA9B8;
+			  width: 87%;
+			  height: 310px;
+			  position: absolute;
+			  top: 1rem;
+			  left: 0;
+			  padding: 1rem;
+			  font-size: 10px;
+			  font-family: carme, sans-serif;
+			  color: #fff;
+			  line-height: 1.2;
+			  z-index: 5;
+			  opacity:0;
+			  border-radius: 0 5px 5px;
+			  transition: all 1s ease;
+			 }
+
+			.tab .tab-e {
+			  margin-top: -1rem;
+			  float: left;
+			  width:1%;
+			  min-width: 60px;
+			  padding: 5px;
+			  background: #445;
+			  margin-right: 3px;
+			  text-decoration: none;
+			  font-family: nunito, sans-serif;
+			  font-size: 10px;
+			  color: #dfdfdf;
+			  text-align: center;
+			  position: relative;
+			  border-radius: 5px 5px 0 0;
+			  transition: all .5s ease;
+			 }
+
+			a.tab-e:hover {
+			  color: #bbb;
+			 }
+			  p img {float: left; width: 20%;}
+			  
+			.diana:target + .tab div {
+			  opacity: 1;
+			  background: #8AA9B8;
+			  color: #fff;    
+			 }
+
+
+			.diana:target + .tab .tab-e {
+			  background: #8AA9B8;
+			  color: #f5f5f5;
+			  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			  z-index: 2;
+			 }
+
+			@media screen and (max-width:370px)
+			 {
+			
+			.contenedor-tabs {
+				width: 100%;
+				min-width: 370px;
+				margin: 2.5rem 0;
+			  }
+			.tab div {
+				font-size: 1rem;
+				line-height: 1.1;
+				padding: 1rem 5px;
+				width: 100%;
+			  }  
+			.tab .tab-e {
+				font-size: 1rem;
+				padding: .5rem 0;
+				text-align: center;
+				line-height: 1.5rem;
+				width: 25%;
+				margin-right: 0;
+				}
+			 }
+			
+			.divtrans{
+				filter: alpha;
+				opacity: 0.5;
+				border: 1px solid #CCC;
+				padding: .5em;
+				overflow: hidden;
+				position:absolute;
+			}
+			
+			#div-1 {
+				filter: alpha;
+				opacity: 0%;
+				border: 1px solid #CCC;
+				background-color: #E0E0E0;
+				position:absolute;
+			}
+			
+			.ocult{
+				display:none;
+				opacity: 100%;
+			}
+			
+			#div-1a {
+				top:3px;
+				left:10px;
+				right:51%;
+				width:300px;
+				filter: alpha;
+				border: 1px solid #CCC;
+				background-color: #E0E0E0;
+				overflow: hidden;
+				position:absolute;
+				display:true;
+			}
+			#div-1b {
+				top:50px;
+				left:50%;
+				width:100px;
+				filter: alpha;
+				border: 1px solid #CCC;
+				background-color: #E0E0E0;
+				position:absolute;
+				display:true;
+			}
+			
+			#insidediv{
+				width:150px;
+				height: 100px;
+			}
+			
+			#aquisol{
+				height: 220px;
+				overflow: hidden;
+				width: 220px;
+				position:relative;
+			}
+    	</style>
+    </head>
+    <body>
+	<!-- BOTONS TAULELL -->
+	<!-- ::::::: TERRA :::::::: -->
+	<!--
+	LA INTENCIO AQUÏ ES CREAR UN MENÚ ON PODEM VEURE ELS PLANETES CREATS AMB EL SISTEMA I LA LLIBRERIA DE THREE.PLANETS, la qual és més fácil i
+	eficient. El problema que he tingut es a l'hora de posar la altre web com a objecte o com a iframe, no la puc moure amb el ratolí des de el frame o objecte.-->
+		<div class="contenedor-tabs">
+				<span class="diana" id="dos"></span>
+				<div class="tab">
+					<a href="#docehome" class="tab-e">Home</a>
+					<div>
+						
+					</div>
+				</div>
+			
+			<span class="diana" id="una"></span>
+				<div class="tab">
+					<a href="#una" class="tab-e"  onchange="focus(document.getElementById('aquisol')); ">Sol</a>
+					<div>
+						<p> SOL </p>
+						<p>Del latín solis, es una estrella tipo G2 en el centro del sistema solar. En este, todos los planetas, asteroides, meteroides, cometas e incluso polvo orbita a su alrededeor.
+						La distancia del Sol al planeta Tierra es de 149 597 870 700 m (150 millones de kilómetros).</p><br>
+						<object type="text/html" data="http://localhost/pr1/sol.html" id="aquisol"></object>
+						
+					</div>
+					<!-- <div id="aquisol"> 
+						
+					</div> -->
+				</div>
+
+				<span class="diana" id="veinte"></span>
+				<div class="tab">
+					<a href="#veinte" class="tab-e">Mercurio</a>
+					<div>
+						<p> Mercurio </p>
+						<p>Planeta del sistema solar más próximo al sol y el más pequeño. Su período de rotación se creia similar a su período de translación, però se diferencia pues este son 88 días.</p><br>
+						<object type="text/html" data="http://localhost/pr1/Mercurio.html" id="aquisol"></object>
+					</div>
+				</div>
+
+				<span class="diana" id="once"></span>
+				<div class="tab">
+					<a href="#once" class="tab-e">Venus</a>
+					<div>
+						<p> Venus </p>
+						<p>Segundo planeta del sistema solar en orden de la distancia al Sol y tercero en cuanto a tamaño. Período de rotación de 243 días. Des de el 2013, Venus se encuentra a distancia de 39 541 578 kilómetros de la Tierra</p><br>
+						<object type="text/html" data="http://localhost/pr1/venus.html" id="aquisol"></object>
+					</div>
+				</div>
+
+				<span class="diana" id="cuatro"></span>
+				<div class="tab">
+					<a href="#cuatro" class="tab-e">La Tierra</a>
+					<div>
+						<p> La Tierra </p>
+						<p>Del latín Terra, és el planeta del sistema solar que gira alrededor del Sol en el Sistema Solar. És el mayor planeta de los cuatro terrestres dentro del sistema solar.</p><br>
+						<object type="text/html" data="http://localhost/pr1/tierra.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="cinco"></span>
+				<div class="tab">
+					<a href="#cinco" class="tab-e">La Luna</a>
+					<div>
+						<p> La Luna </p>
+						<p>És el único satélite natural de la Tierra. Con un diámeetro de 3474 km es el quinto satélite más grande del sistema solar. La distancia media de la luna entre el planeta Tierra y esta, son de 348 400 km.</p><br>
+						<object type="text/html" data="http://localhost/pr1/moon.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="seis"></span>
+				<div class="tab">
+					<a href="#seis" class="tab-e">Marte</a>
+					<div>
+						<p> Marte </p>
+						<p>És el cuarto planeta del sistema soar más cercano al Sol. Llamado así por el Dios de la Guerra de la mitología Romana. Al igual que el planeta Tierra, este dispone de una atmósfera, aunque mucho más delgada, formada por dióxido de carbono y dos satélites. A dia de hoy, Marte se encuentra a una distancai de 55,7776 millones de km de la Tierra, que variará según pasen los años (llegando a 55,7686 millones de km en el 2208) .</p><br>
+						<object type="text/html" data="http://localhost/pr1/marte.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="siete"></span>
+				<div class="tab">
+					<a href="#siete" class="tab-e">Júpiter</a>
+					<div>
+						<p> Jupiter </p>
+						<p>Quinto planeta del Sistema Solar. Forma parte de los denominados planetas exteriores o gaseosos, y recibe su nombre del Dios Romano Júpiter. Su masa es 1317 veces mayor que el de la Tierra.
+						Es el planeta del sistema solar con más masa.</p><br>
+						<object type="text/html" data="http://localhost/pr1/jupiter.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="ocho"></span>
+				<div class="tab">
+					<a href="#ocho" class="tab-e">Saturno</a>
+					<div>
+						<p> Saturno </p>
+						<p>Sexto planeta del Sistema Solar. Es el segundo planeta en tamaño y masa después de Júpiter y el único con un anillo visible desde nuestro planeta. Tiene una gran cantidad de satélites, uno del cual es Titan, el satélite con mayor atmósfera del Sistema Solar.</p><br>
+						<object type="text/html" data="http://localhost/pr1/saturno.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="nueve"></span>
+				<div class="tab">
+					<a href="#nueve" class="tab-e">Urano</a>
+					<div>
+						<p> Urano </p>
+						<p>Séptimo planeta del Sistema Solar, tercero en cuanto a tamaño de mayor a menor. Se llama así en honor al Dios griego Urano, padre de Cronos y abuelo de Zéus. Tiene la órbita más lenta entre los planetas del Sistema Solar. És conocido, junto a Neptuno cómo "el gigante helado".</p><br>
+						<object type="text/html" data="http://localhost/pr1/urano.html" id="aquisol"></object>
+					</div>
+				</div>
+				
+				<span class="diana" id="diez"></span>
+				<div class="tab">
+					<a href="#diez" class="tab-e">Neptuno</a>
+					<div>
+						<p> Neptuno </p>
+						<p>Octavo planeta en cuanto a distáncia del Sistema Solar. Forma parte de los denominados planetas exteriores o gigantes gaseoso, y también Se lo conoce junto a Urano, cómo uno de los dos gigantes helados. És el tercer planeta más grande en cuanto a masa.</p><br>
+						<object type="text/html" data="http://localhost/pr1/neptuno.html" id="aquisol"></object>
+					</div>
+				</div>
+
+	</div>
+	<div id="div-1b ">
+	
+	</div>
+	
+	<!-- ::::::: SOL :::::::: 
+	<input type="button" value="Sol" class="titol2" onClick=" clicMe() "></input>
+	<!-- ::::::: MART :::::::: --
+	<input type="button" value="Mart" class="titol3" onClick=" clicMe() "></input>
+	<!-- ::::::: JUPITER :::::::: --
+	<input type="button" value="Júpiter" class="titol4" onClick=" clicMe() "></input>
+	<!-- ::::::: SATURN :::::::: --
+	<input type="button" value="Saturn" class="titol5" onClick=" clicMe() "></input>
+	<!-- ::::::: URA :::::::: --
+	<input type="button" value="Urà" class="titol6" onClick=" clicMe() "></input>
+	<!-- ::::::: NEPTU :::::::: --
+	<input type="button" value="Neptú" class="titol7" onClick=" clicMe() "></input>
+	<!-- ::::::: PLUTO :::::::: --
+	<input type="button" value="Plutó" class="titol8" onClick=" clicMe() "></input>
+	<!-- ::::::: MERCURI :::::::: 
+	<input type="button" value="Mercuri" class="titol9" onClick=" clicMe() "></input>
+	<!-- ::::::: VENUS :::::::: 
+	<input type="button" value="Venus" class="titol10" onClick=" clicMe() "></input>-->
+	
+    	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.js"></script>
+		<script src='threex.planets.js'></script>
+		<script src='threex.atmospherematerial.js'></script>
+		
+		<div>
+    	<script type="text/javascript">
+//Variables de prova		
+			var container, stats, controls;
+			
+        /* $(function(){
+                // Indica el nombre del archivo a cargar
+                $("#div-1b").load("http://localhost/pr1/funciona2.html");
+            });
+			*/
+			
+// INICI FUNCION INICIA			
+function init(){
+			/*)
+			var y=0;
+
+			document.addEventListener('mousemove', function (event){
+				y = parseInt(event.offsetY);
+			});*/
+
+			var Origen = new THREE.Vector4(0, 0, 0, 0);
+    		var escena = new THREE.Scene();
+    		var fovy = 75,
+    			aspectRatio = window.innerWidth / window.innerHeight,
+    			near = 1,
+    			far = 500;
+    		var camera = new THREE.PerspectiveCamera(fovy, aspectRatio, near, far);
+    		camera.position.set(150, 150, 150, 150);
+    		camera.lookAt(Origen);
+    		var renderer = new THREE.WebGLRenderer( { antialias: false } );
+    		renderer.setSize(window.innerWidth, window.innerHeight);
+    		document.body.appendChild(renderer.domElement);
+			/*
+				//////////////////////////////////////////////////////////////////////////////////
+				//		add star sphere							//
+				//////////////////////////////////////////////////////////////////////////////////
+				var geometry  = new THREE.SphereGeometry(90, 32, 32)
+				var url   = 'bower_components/threex.planets/examples/images/galaxy_starfield.png'
+				var material  = new THREE.MeshBasicMaterial({
+					map : THREE.ImageUtils.loadTexture(url),
+					side  : THREE.BackSide
+				})
+				var starSphere  = new THREE.Mesh(geometry, material)
+				scene.add(starSphere)*/
+			
+//CRIDADA - RESIZE de la CAMERA
+			window.addEventListener( 'resize', onWindowResize, false );
+    		
+//::::::::::::::::::::::::: CREACION SOL ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::			
+			function crearSol(objeto){
+    			var geometriaSol = new THREE.SphereGeometry(20, 20, 20),
+    				materialSol = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol = new THREE.Mesh(geometriaSol, materialSol);
+    			sol.add(objeto)
+    			escena.add(sol);
+    			return sol;
+    		}
+//::::::::::::::::::::::::: CREACION SOL ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+//::::::::::::::::::::::::: CREACION FONDO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::		
+			function crearFondo(objeto){
+				var geometry = new THREE.SphereGeometry(279,279, 279),
+					material = new THREE.MeshBasicMaterial({
+						map: THREE.ImageUtils.loadTexture('images/stars.jpg'),
+						side  : THREE.BackSide
+					}),
+				fondo = new THREE.Mesh(geometry, material);
+    			fondo.add(objeto)
+    			escena.add(fondo);
+    			return fondo;
+			}
+//::::::::::::::::::::::::: CREACION FONDO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::			
+		
+			
+			
+			
+//FUNCIO RESIZE CAMERA
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				controls.handleResize();
+
+				render();
+
+			}
+
+						
+			
+			
+			
+//::::::::::::::::::::::::: CREACION MERCURIO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearMercury(objeto)	{
+    			var geometriaMercury = new THREE.SphereGeometry(2,20, 20),
+    				materialMercury = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/mercury.jpg')
+					}),
+    				mercury = new THREE.Mesh(geometriaMercury, materialMercury);
+    			mercury.translateX(38);
+    			mercury.add(objeto);
+    			return mercury;
+    		}
+//::::::::::::::::::::::::: CREACION MERCURIO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			
+			
+			
+			
+//::::::::::::::::::::::::: CREACION VENUS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearVenus(objeto)	{
+    			var geometriaVenus = new THREE.SphereGeometry(3,20, 20),
+    				materialVenus = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/venus.jpg')
+					}),
+    				venus = new THREE.Mesh(geometriaVenus, materialVenus);
+    			venus.translateX(48);
+    			venus.add(objeto);
+    			return venus;
+    		}
+//::::::::::::::::::::::::: CREACION VENUS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			
+			
+			
+//::::::::::::::::::::::::: CREACION TIERRA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	    	
+		function crearTerra(objeto)	{
+    			var geometriaTerra = new THREE.SphereGeometry(5, 20, 20),
+    				materialTerra = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/earth.jpg')
+					}),
+    				terra = new THREE.Mesh(geometriaTerra, materialTerra);
+    			terra.translateX(68);
+    			terra.add(objeto);
+    			return terra;
+    		}
+//::::::::::::::::::::::::: CREACION TIERRA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+
+//::::::::::::::::::::::::: CREACION MARTE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearMarte(objeto)	{
+    			var geometriaMarte = new THREE.SphereGeometry(2,20, 20),
+    				materialMarte = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/mars.jpg')
+					}),
+    				marte = new THREE.Mesh(geometriaMarte, materialMarte);
+    			marte.translateX(88);
+    			marte.add(objeto);
+    			return marte;
+    		}
+//::::::::::::::::::::::::: CREACION MARTE ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+
+//::::::::::::::::::::::::: CREACION JUPITER ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearJupiter(objeto)	{
+    			var geometriaJupiter = new THREE.SphereGeometry(12,20, 20),
+    				materialJupiter = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/jupiter.jpg')
+					}),
+    				jupiter = new THREE.Mesh(geometriaJupiter, materialJupiter);
+    			jupiter.translateX(128);
+    			jupiter.add(objeto);
+    			return jupiter;
+    		}
+//::::::::::::::::::::::::: CREACION JUPITER ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+//::::::::::::::::::::::::: CREACION SATURNO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearSaturno(objeto)	{
+    			var geometriaSaturno = new THREE.SphereGeometry(10,20, 20),
+    				materialSaturno = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/saturn.jpg')
+					}),
+    				saturno = new THREE.Mesh(geometriaSaturno, materialSaturno);
+    			saturno.translateX(178);
+    			saturno.add(objeto);
+    			return saturno;
+    		}
+//::::::::::::::::::::::::: CREACION SATURNO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+
+//::::::::::::::::::::::::: CREACION URANO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearUrano(objeto)	{
+    			var geometriaUrano = new THREE.SphereGeometry(8,20, 20),
+    				materialUrano = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/uranus.jpg')
+					}),
+    				urano = new THREE.Mesh(geometriaUrano, materialUrano);
+    			urano.translateX(228);
+    			urano.add(objeto);
+    			return urano;
+    		}
+//::::::::::::::::::::::::: CREACION URANO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+//::::::::::::::::::::::::: CREACION NEPTUNO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			function crearNeptuno(objeto)	{
+    			var geometriaNeptuno = new THREE.SphereGeometry(6,20, 20),
+    				materialNeptuno = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/neptune.jpg')
+					}),
+    				neptuno = new THREE.Mesh(geometriaNeptuno, materialNeptuno);
+    			neptuno.translateX(278);
+    			neptuno.add(objeto);
+    			return neptuno;
+    		}
+//::::::::::::::::::::::::: CREACION NEPTUNO ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+
+//::::::::::::::::::::::::: CREACION LUNA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+    		function crearLuna()	{
+    			var geometriaLuna = new THREE.SphereGeometry(1, 20, 20),
+    				materialLuna = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/moon.jpg')
+					}),
+    				luna = new THREE.Mesh(geometriaLuna, materialLuna);
+    			luna.translateX(10);
+    			return luna;
+    		}
+//::::::::::::::::::::::::: CREACION LUNA ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+			
+	
+			function crearLuz()	{
+	            var pointLight = new THREE.PointLight(0xFFFFFF);
+	            pointLight.position.set(100, 500, 300);
+	            escena.add(pointLight);
+           	}
+			
+    		var fondo = crearFondo();
+			var luna = crearLuna();
+    		var terra = crearTerra(luna);
+    		var mercury = crearMercury();
+			var sol = crearSol(mercury);
+			var sol2 = crearSol2(terra);
+			var venus = crearVenus();
+			var sol3 = crearSol3(venus);
+			var marte = crearMarte();
+			var sol4 = crearSol4(marte);
+			var jupiter = crearJupiter();
+			var sol5 = crearSol5(jupiter);
+			var saturno = crearSaturno();
+			var sol6 = crearSol6(saturno);
+			var urano = crearUrano();
+			var sol7 = crearSol7(urano);
+			var neptuno = crearNeptuno();
+			var sol8 = crearSol8(neptuno);
+	
+	
+    		crearLuz();
+
+// ------------------------ TRAMPAS varios SOLES cómo CENTROS ----------------------------------------
+/* El que hem fet aquí es una petita tramp, donsc hem creat un sol per a cada planeta
+i aquestos giran al voltant d'un d'aquest sols, on només es veu el més gran. Ho hem fet per 
+tal de poder aplicar-li diferents rotacions sobre un mateix objecte, i com no varem aconseguir fer-ho amb un sol
+en varem crear més per trobar una solució, tot i que no es correcte aquest mètode*/
+		function crearSol2(objeto){
+    			var geometriaSol2 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol2 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol2 = new THREE.Mesh(geometriaSol2, materialSol2);
+    			sol2.add(objeto)
+    			escena.add(sol2);
+    			return sol2;
+    		}
+
+			function crearSol3(objeto){
+    			var geometriaSol3 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol3 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol3 = new THREE.Mesh(geometriaSol3, materialSol3);
+    			sol3.add(objeto)
+    			escena.add(sol3);
+    			return sol3;
+    		}
+			function crearSol4(objeto){
+    			var geometriaSol4 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol4 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol4 = new THREE.Mesh(geometriaSol4, materialSol4);
+    			sol4.add(objeto)
+    			escena.add(sol4);
+    			return sol4;
+    		}		
+			
+			function crearSol5(objeto){
+    			var geometriaSol5 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol5 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol5 = new THREE.Mesh(geometriaSol5, materialSol5);
+    			sol5.add(objeto)
+    			escena.add(sol5);
+    			return sol5;
+    		}
+			
+			function crearSol6(objeto){
+    			var geometriaSol6 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol6 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol6 = new THREE.Mesh(geometriaSol6, materialSol6);
+    			sol6.add(objeto)
+    			escena.add(sol6);
+    			return sol6;
+    		}
+			
+			function crearSol7(objeto){
+    			var geometriaSol7 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol7 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol7 = new THREE.Mesh(geometriaSol7, materialSol7);
+    			sol7.add(objeto)
+    			escena.add(sol7);
+    			return sol7;
+    		}
+			
+			function crearSol8(objeto){
+    			var geometriaSol8 = new THREE.SphereGeometry(5, 20, 20),
+    				materialSol8 = new THREE.MeshLambertMaterial({
+						map: THREE.ImageUtils.loadTexture('images/sol.jpg')
+					}),
+    				sol8 = new THREE.Mesh(geometriaSol8, materialSol8);
+    			sol8.add(objeto)
+    			escena.add(sol8);
+    			return sol8;
+    		}
+// ------------------------ TRAMPAS varios SOLES cómo CENTROS ----------------------------------------		
+			
+			
+			
+// ------------------------ ROTACIONES ---------------------------------------------------------------
+// ------------------------ SOL ----------------------
+    		function rotacionarSol(){
+    			var matrizRotacion = new THREE.Matrix4();
+    			matrizRotacion.makeRotationY(calcularRadianos(1));
+    			sol.applyMatrix(matrizRotacion);
+    		}
+			
+// ------------------------ MERCURIO ----------------------				
+			function rotacionarMercury(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(1.5));
+    			mercury.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = mercury.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			mercury.applyMatrix(matrizTranslacioOrigen);
+    			mercury.applyMatrix(matrizRotacionEje);
+    			mercury.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ Venus ----------------------				
+			function rotacionarVenus(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(2));
+    			venus.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = venus.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.1));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			venus.applyMatrix(matrizTranslacioOrigen);
+    			venus.applyMatrix(matrizRotacionEje);
+    			venus.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ TIERRA ----------------------			
+    		function rotacionarTerra(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(1));
+    			terra.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = terra.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			terra.applyMatrix(matrizTranslacioOrigen);
+    			terra.applyMatrix(matrizRotacionEje);
+    			terra.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ LUNA ----------------------			
+    		function rotacionarLuna(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(1.5));
+    			luna.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = luna.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			luna.applyMatrix(matrizTranslacioOrigen);
+    			luna.applyMatrix(matrizRotacionEje);
+    			luna.applyMatrix(matrizTranslacioPos);
+    		}
+// ------------------------ Marte ----------------------				
+			function rotacionarMarte(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(0.8));
+    			marte.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = marte.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			marte.applyMatrix(matrizTranslacioOrigen);
+    			marte.applyMatrix(matrizRotacionEje);
+    			marte.applyMatrix(matrizTranslacioPos);
+    		}			
+// ------------------------ Jupiter ----------------------			
+			function rotacionarJupiter(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(0.6));
+    			jupiter.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = jupiter.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			jupiter.applyMatrix(matrizTranslacioOrigen);
+    			jupiter.applyMatrix(matrizRotacionEje);
+    			jupiter.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ Saturno ----------------------			
+			function rotacionarSaturno(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(0.4));
+    			saturno.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = saturno.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			saturno.applyMatrix(matrizTranslacioOrigen);
+    			saturno.applyMatrix(matrizRotacionEje);
+    			saturno.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ Urano ----------------------			
+			function rotacionarUrano(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(0.2));
+    			urano.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = urano.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			urano.applyMatrix(matrizTranslacioOrigen);
+    			urano.applyMatrix(matrizRotacionEje);
+    			urano.applyMatrix(matrizTranslacioPos);
+    		}
+			
+// ------------------------ Neptuno ----------------------			
+			function rotacionarNeptuno(){
+    			var matrizRotacionY = new THREE.Matrix4();
+    			matrizRotacionY.makeRotationY(calcularRadianos(0.1));
+    			neptuno.applyMatrix(matrizRotacionY);
+    			var matrizRotacionEje = new THREE.Matrix4(),
+    				matrizTranslacioPos = new THREE.Matrix4(),
+    				matrizTranslacioOrigen = new THREE.Matrix4(),
+    				posicao = neptuno.position;
+    			matrizRotacionEje.makeRotationY(calcularRadianos(0.5));
+    			matrizTranslacioPos.makeTranslation(posicao.x, posicao.y, posicao.z);
+    			matrizTranslacioOrigen.makeTranslation(-posicao.x, -posicao.y, -posicao.z);
+    			neptuno.applyMatrix(matrizTranslacioOrigen);
+    			neptuno.applyMatrix(matrizRotacionEje);
+    			neptuno.applyMatrix(matrizTranslacioPos);
+    		}
+			
+    		function calcularRadianos(grau)	{
+    			return grau * Math.PI / 180;
+    		}
+			
+    		function render(){
+    			renderer.render(escena, camera);
+    			rotacionarLuna();
+    			rotacionarTerra();
+    			rotacionarSol();
+				rotacionarMercury();
+				rotacionarVenus();
+				rotacionarMarte();
+				rotacionarJupiter();
+				rotacionarSaturno();
+				rotacionarUrano();
+				rotacionarNeptuno();
+    			requestAnimationFrame(render);
+    		}
+			
+			render();
+			
+			}
+			
+			// ------------------------ Funciones testing ----------------------			
+			//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			/*//FUNCIO BOTÓ TERRA
+			function clicMe() {
+				var div = document.getElementById('contenidor');
+				if (div.style.display !== 'none') {
+					div.style.display = 'none';
+				}
+				else {
+					div.style.display = 'block';
+				}
+				load_page2();
+			};
+			//CARREGA DIV AMB BOTO TERRA
+			function load_page2(){
+				document.getElementById("div-1b").innerHTML='<object type="text/html" data="http://localhost/pr1/funciona2.html" ></object>';
+			}
+			//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			//FUNCIO BOTÓ TERRA
+			function clicMe() {
+				var div = document.getElementById('contenidor');
+				if (div.style.display !== 'none') {
+					div.style.display = 'none';
+				}
+				else {
+					div.style.display = 'block';
+				}
+				load_page2();
+			};*/
+			//CARREGA DIV AMB BOTO TERRA
+			/*function load_page2(){
+				document.getElementById("aquisol").innerHTML='<object type="text/html" data="http://localhost/pr1/funciona2.html" ></object>';
+			}*/
+			//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+			// ------------------------ Funciones testing ----------------------	
+			
+// FIN FUNCION INICIA
+
+//Intent posar focus al DIV per tal de poder-ho moure
+			init();
+			$(window).on('load', function(){
+			$(parent.document).find('aquisol').focus();
+			});	
+    	</script>
+		</div>
+    </body>
+</html>
